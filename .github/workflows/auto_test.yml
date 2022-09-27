@@ -44,5 +44,6 @@ jobs:
       - name: Run tests
         run: |
           pip install pytest
+          pip install coverage
           pytest tests/
           coverage report
