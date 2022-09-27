@@ -1,6 +1,6 @@
 import pytest
-from ..src.initiation_part2 import frequency_sort
-from ..src.initiation_part2 import time_converter
+from src.initiation_part2 import frequency_sort
+from src.initiation_part2 import time_converter
 
 
 def test_frequency_sort():
