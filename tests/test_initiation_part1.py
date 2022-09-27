@@ -54,6 +54,3 @@ def test_is_all_upper():
     assert is_all_upper("444") == True
     assert is_all_upper("55 55 5 ") == True
     
-if __name__ == '__main__':
-    pytest.main()
-    
