@@ -1,10 +1,10 @@
 import pytest
-from ..src.initiation_part1 import mult_two
-from ..src.initiation_part1 import checkio
-from ..src.initiation_part1 import flat_list
-from ..src.initiation_part1 import goes_after
-from ..src.initiation_part1 import split_pairs
-from ..src.initiation_part1 import is_all_upper
+from src.initiation_part1 import mult_two
+from src.initiation_part1 import checkio
+from src.initiation_part1 import flat_list
+from src.initiation_part1 import goes_after
+from src.initiation_part1 import split_pairs
+from src.initiation_part1 import is_all_upper
 
 def test_mult_two():
     assert mult_two(3, 2) == 6
