@@ -43,5 +43,6 @@ jobs:
       #----------------------------------------------
       - name: Run tests
         run: |
+          pip install pytest
           pytest ../../tests/
           coverage report
