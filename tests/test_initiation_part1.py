@@ -1,4 +1,3 @@
-import pytest
 from src.initiation_part1 import mult_two
 from src.initiation_part1 import checkio
 from src.initiation_part1 import flat_list
