@@ -67,7 +67,7 @@ def flat_list(array):
     """
     new = []
     for lst in array:
-        if lst.isinstance(int):
+        if isinstance(lst, int):
             new.append(lst)
         else:
             new += flat_list(lst)
