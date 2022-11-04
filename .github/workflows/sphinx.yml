@@ -17,7 +17,7 @@ jobs:
         run: poetry install
       - name: Build documentation
         run: |
-          poetry run pip install sphinx-build
+          poetry install sphinx-build
           mkdir gh-pages
           touch gh-pages/.nojekyll
           cd docs/
