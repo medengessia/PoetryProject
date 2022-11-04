@@ -20,6 +20,7 @@ jobs:
           poetry run pylint --fail-under=0 src
       - name: Pytest # Run pytest
         run: |
+          poetry run pip install coverage
           poetry run coverage run -m pytest
           poetry run coverage report
       - name: Coverage Badge
