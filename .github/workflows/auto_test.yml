@@ -1,49 +1,40 @@
-name: test
-
 on:
   push:
-    branches:
-      - master
+    branches: [master]
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      #----------------------------------------------
-      #       check-out repo and set-up python
-      #----------------------------------------------
-      - name: Check out repository
-        uses: actions/checkout@v2
-      - name: Set up python
-        id: setup-python
-        uses: actions/setup-python@v2
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+      - name: Run image # install poetry
+        uses: abatilo/actions-poetry@v2.0.0
         with:
-          python-version: 3.9
-      #----------------------------------------------
-      #  -----  install & configure poetry  -----
-      #----------------------------------------------
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
-        with:
-          virtualenvs-create: true
-          virtualenvs-in-project: true
-          installer-parallel: true
-
-      #----------------------------------------------
-      #       load cached venv if cache exists
-      #----------------------------------------------
-      - name: Load cached venv
-        id: cached-poetry-dependencies
-        uses: actions/cache@v2
-        with:
-          path: .venv
-          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
-      #----------------------------------------------
-      #              run test suite
-      #----------------------------------------------
-      - name: Run tests
+          poetry-version: 1.2.1
+      - name: Install dependencies # install all dependencies
+        run: poetry install
+      - name: Pylint # Run pylint static analysis
         run: |
-          pip install pytest
-          pip install coverage
-          coverage run -m pytest tests/
-          coverage report
+          poetry run pylint --fail-under=0 hash_code
+      - name: Pytest # Run pytest
+        run: |
+          poetry run coverage run -m pytest
+          poetry run coverage report
+      - name: Coverage Badge
+        uses: tj-actions/coverage-badge-py@v1.8
+
+      - name: Verify Changed files
+        uses: tj-actions/verify-changed-files@v9
+        id: changed_files
+        with:
+          files: coverage.svg
+
+      - name: Commit files
+        if: steps.changed_files.outputs.files_changed == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add coverage.svg
+          git commit -m "Updated coverage.svg"
+          git push
